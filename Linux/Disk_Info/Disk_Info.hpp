@@ -23,9 +23,9 @@ namespace get_disk_linux
         
         std::cout << "Disk Information" << std::endl;
         std::cout << "----------------" << std::endl;
-        std::cout << "Total I/O Operations: " << totalIO << " bytes " << std::endl;
-        std::cout << "Read Operations: " << readIO << " bytes " << std::endl;
-        std::cout << "Write Operations: " << writeIO << " bytes " << std::endl;
+        std::cout << "Total I/O Operations: " << totalIO << std::endl;
+        std::cout << "Read Operations: " << readIO  << std::endl;
+        std::cout << "Write Operations: " << writeIO << std::endl;
         std::cout << "Data Read: " << dataRead << " bytes" << std::endl;
         std::cout << "Data Write: " << dataWrite << " bytes" << std::endl;
     }
