@@ -9,6 +9,7 @@ public class Volume {
     private long spaceTotal;
     private long spaceAvailable;
     private String uuid;
+    private String mountPoint;
 
     public Volume(OSFileStore o){
         this.vol = o;
@@ -17,6 +18,7 @@ public class Volume {
         this.spaceTotal = o.getTotalSpace();
         this.spaceAvailable = o.getFreeSpace(); // or getUsableSpace?
         this.uuid = o.getUUID();
+        this.mountPoint = o.getMount();
         }
     
     public void updateSpace(){
@@ -48,5 +50,9 @@ public class Volume {
 
     public String getUUID() {
         return uuid;
+    }
+
+    public String getMountPoint() {
+        return mountPoint;
     }
 }
