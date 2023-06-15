@@ -14,28 +14,30 @@ public class Disk {
     private List<Volume> listVol;
 
     void initVolume(List<Volume> listVol){
-        listVol = new ArrayList<Volume>(0);
+        this.listVol = new ArrayList<Volume>(0);
         for (HWPartition p : disk.getPartitions()) {
+
             for (Volume v : listVol) {
-                if (p.getUuid().equals(v.getUUID())) {
-                    listVol.add(v);
+
+                if (p.getMountPoint().equals(v.getMountPoint())) {
+                    this.listVol.add(v);
                 }
             }
         }
     }  
-    public Disk(HWDiskStore d, List<Volume> listVol){
+    
+    public Disk(HWDiskStore d, List<Volume> list){
         this.disk = d;
-        this.name = disk.getName();
+        this.name = disk.getModel();
         this.size = disk.getSize();
-        initVolume(listVol);
+        initVolume(list);
         updateSpace(this.listVol);
     }
 
-    public void updateSpace(List<Volume> listVol) {
+    public void updateSpace(List<Volume> list) {
         spaceTotal = 0;
         spaceAvailable = 0;
-        for (Volume v : listVol) {
-            spaceTotal += v.getSpaceTotal();
+        for (Volume v : list) {
             spaceAvailable += v.getSpaceAvailable();
         }
     }
@@ -44,8 +46,8 @@ public class Disk {
         return disk;
     }
 
-    public long getSpaceTotal(){
-        return (spaceTotal);
+    public long getSize(){
+        return (size);
     }
 
     public long getSpaceAvailable(){
