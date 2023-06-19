@@ -1,0 +1,12 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "sysInfo/lib/slf4j-simple-2.0.7.jar",
+        "sysInfo/lib/slf4j-api-2.0.7.jar",
+        "sysInfo/lib/oshi-core-6.4.3.jar",
+        "sysInfo/lib/junit-jupiter-api-5.10.0-M1.jar",
+        "sysInfo/lib/jna-platform-5.13.0.jar",
+        "sysInfo/lib/jna-5.13.0.jar",
+        "sysInfo/lib/hamcrest-2.2.jar"
+    ]
+}
