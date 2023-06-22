@@ -1,8 +1,9 @@
-package resource.storage;
+package resource.storage.Win;
 
 import oshi.software.os.OSFileStore;
+import resource.storage.*;
 
-public class Volume {
+public class WinVolume extends Volume{
     private OSFileStore vol;
     private String name;
     private String fileSys;
@@ -11,10 +12,11 @@ public class Volume {
     private String uuid;
     private String mountPoint;
 
-    public Volume(OSFileStore o){
+    public WinVolume(OSFileStore o) {
+        super(o);
         this.vol = o;
         this.name = o.getLabel();
-        this.fileSys = o.getType();
+        this.fileSys = o.getName();
         this.spaceTotal = o.getTotalSpace();
         this.spaceAvailable = o.getUsableSpace(); // or getUsableSpace?
         this.uuid = o.getUUID();
@@ -28,7 +30,7 @@ public class Volume {
 
     // Getters and setters
 
-    public String getName() {
+    public String getType() {
         return name;
     }
 

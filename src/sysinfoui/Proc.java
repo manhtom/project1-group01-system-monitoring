@@ -1,6 +1,6 @@
 package sysinfoui;
 
-import system.software.*;
+import system.OS;
 import java.util.*;
 import process.Process;
 import process.*;

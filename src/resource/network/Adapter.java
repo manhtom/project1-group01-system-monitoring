@@ -1,57 +1,46 @@
 package resource.network;
 
-import java.util.Arrays;
 import oshi.hardware.NetworkIF;
+import system.OS;
 public class Adapter {
-    private NetworkIF net;
-    private String ipAddress;
+    private String[] ipAddressV4;
+    private String[] ipAddressV6;
     private String name;
     private String type;
-    private float dataSent;
-    private float dataReceived;
-    
-
+    private long dataSent;
+    private long dataReceived;
+    private String macAddr;
+    private int IfType;
+    public NetworkIF net;
+ 
     public Adapter(NetworkIF net){
         this.net = net;
-        this.ipAddress = Arrays.toString(net.getIPv4addr());
-        this.name = net.getName();
-        this.type = net.getDisplayName();
+        this.ipAddressV4 = net.getIPv4addr();
+        this.ipAddressV6 = net.getIPv6addr();
+        this.name = net.getDisplayName();
+        this.type = net.getName();
         this.dataReceived = net.getBytesRecv();
         this.dataSent = net.getBytesSent();
-    }
-
-    public Adapter(String ipAddress, String name, String type, float dataSent, float dataReceived){
-        this.ipAddress = ipAddress;
-        this.name = name;
-        this.type = type;
-        this.dataSent = dataSent;
-        this.dataReceived = dataReceived;
+        this.macAddr = net.getMacaddr();
+        this.IfType = net.getIfType();
     }
     
-    public Adapter(String ipAddress) {
-        this.ipAddress = ipAddress;
+    public String getIPv4Address() {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < ipAddressV4.length; i++){
+            sb.append(ipAddressV4[i]);
+        }
+        String IPv4 = sb.toString();
+        return IPv4;
     }
 
-    public Adapter(String ipAddress, String name) {
-        this.ipAddress = ipAddress;
-        this.name = name;
-    }
-    
-    public Adapter(String ipAddress, String name, String type) {
-        this.ipAddress = ipAddress;
-        this.name = name;
-        this.type = type;
-    }
-    
-    public Adapter(String ipAddress, String name, String type, float dataSent) {
-        this.ipAddress = ipAddress;
-        this.name = name;
-        this.type = type;
-        this.dataSent = dataSent;
-    }
-
-    public String getIpAddress() {
-        return ipAddress;
+    public String getIPv6Address(){
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < ipAddressV6.length; i++){
+            sb.append(ipAddressV6[i]);
+        }
+        String IPv6 = sb.toString();
+        return IPv6;
     }
     public String getName() {          
         return name;
@@ -59,20 +48,27 @@ public class Adapter {
     public String getType() {
         return type;
     }
-    public float getDataSent() {
+    public long getDataSent() {
         return dataSent;
     }
-    public float getDataReceived() {
+    public long getDataReceived() {
         return dataReceived;
     }
-    @Override
-    public String toString() {
-        return "NetworkAdapter{" +
-                "ipAddress='" + ipAddress + '\'' +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", dataSent=" + dataSent +
-                ", dataReceived=" + dataReceived +
-                '}';
+    public String getMacAddress(){
+        return macAddr;
     }
-}
+    public int getIfType(){
+        return IfType;
+    }
+
+
+    public long updateUpSpeed(){
+        return net.getBytesSent();
+    }
+
+    public long updateDownSpeed(){
+
+        return (net.getBytesRecv());
+    }
+
+}   

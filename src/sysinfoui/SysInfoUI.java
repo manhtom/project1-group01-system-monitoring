@@ -1,13 +1,20 @@
 package sysinfoui;
 
 import oshi.*;
-import oshi.software.os.OSProcess;
+import oshi.software.os.OperatingSystem;
 import system.*;
+import system.Win.WinSystemIO;
+import system.Linux.LinuxSystemIO;
+import system.Win.Win;
+import system.Linux.Linux;
+
 import java.time.format.DateTimeFormatter;  
 import java.time.LocalDateTime;    
 import java.util.*;
 import process.Process;
 
+import sysinfoui.Storage.WinStorage;
+import sysinfoui.Storage.LinuxStorage;
 public class SysInfoUI {
     static SystemInfo si;
     static Sys s;
@@ -98,7 +105,8 @@ public class SysInfoUI {
         }
 
         else if (o == 3) {
-            Storage.showDetail(s.io);
+            if (Win.getFamily() == "Windows") WinStorage.showDetail((WinSystemIO) s.io);
+            else  LinuxStorage.showDetail((LinuxSystemIO) s.io);
         }
 
         else if (o == 4) {

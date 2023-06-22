@@ -1,8 +1,7 @@
 package sysinfoui;
 
 import system.SystemCPU;
-import system.software.*;
-
+import system.OS;
 public class CPU {
      private static void pressToContinue() { 
         System.out.println("Press Enter key to continue...");

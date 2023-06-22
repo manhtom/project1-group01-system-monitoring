@@ -1,12 +1,13 @@
 package resource.storage;
 
 import oshi.hardware.HWDiskStore;
+import resource.storage.Linux.PartitionLinux;
 
 import java.util.*;
 
 public class Storage extends Disk {
-    private float totalDataRead;
-    private float totalDataWrite;
+    private long totalDataRead;
+    private long totalDataWrite;
     private long IORead;
     private long IOWrite;
 
@@ -25,10 +26,10 @@ public class Storage extends Disk {
         IOWrite = d.getWrites();
     }
 
-    public float getTotalDataRead(){
+    public long getTotalDataRead(){
         return totalDataRead;
     }
-    public float getTotalDataWritten(){
+    public long getTotalDataWritten(){
         return totalDataWrite;
     }
     public long getIORead(){
@@ -37,5 +38,7 @@ public class Storage extends Disk {
     public long getIOWrite(){
         return IOWrite;
     }
-    
+
+
+
 }

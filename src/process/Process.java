@@ -2,13 +2,13 @@ package process;
 
 import oshi.software.os.OSProcess;
 import oshi.software.os.OSProcess.State;
-import system.software.OS;
+import system.OS;
 
 public class Process {
     OSProcess process;
     private int pid;
     private String name;
-    private State status;
+    private String status;
     private int priority;
     private String user;
     private String path;
@@ -26,7 +26,7 @@ public class Process {
         process = o;
         name = process.getName();
         priority = process.getPriority();
-        status = (process.getState());
+        status = process.getState().toString();
 
         user = process.getUser();
         path = process.getPath();
@@ -63,7 +63,7 @@ public class Process {
         return path;
     }
 
-    public State getStatus() {
+    public String getStatus() {
         return status;
     }
 

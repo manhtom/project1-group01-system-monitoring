@@ -1,16 +1,18 @@
 package resource.network;
 
-import java.util.*;
-
 import oshi.SystemInfo;
 import oshi.hardware.NetworkIF;
 
-public abstract class Network {
-    List <Adapter> adapterList = new ArrayList<Adapter>();
+import java.util.ArrayList;
+import java.util.List;
+
+public class Network {
+    public List<Adapter> adapterList;
     public Network(SystemInfo s) {
-        for (NetworkIF n : s.getHardware().getNetworkIFs()) {
+        adapterList = new ArrayList<Adapter>();
+        for (NetworkIF n : s.getHardware().getNetworkIFs(false)) {
             adapterList.add(new Adapter(n));
-        }
+        }      
     }
 
     public List<Adapter> getAdapters() {
