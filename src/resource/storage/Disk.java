@@ -9,9 +9,9 @@ public class Disk {
     private String name;
     private HWDiskStore disk;
     private long size;
-    private long spaceTotal;
+    //private long spaceTotal;
     private long spaceAvailable;
-    private List<Volume> listVol;
+    public List<Volume> listVol;
 
     void initVolume(List<Volume> listVol){
         this.listVol = new ArrayList<Volume>(0);
@@ -35,7 +35,7 @@ public class Disk {
     }
 
     public void updateSpace(List<Volume> list) {
-        spaceTotal = 0;
+        //spaceTotal = 0;
         spaceAvailable = 0;
         for (Volume v : list) {
             spaceAvailable += v.getSpaceAvailable();

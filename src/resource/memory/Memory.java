@@ -11,8 +11,6 @@ public abstract class Memory {
     protected PhysicalMemory pm;
     private long physicalTotal;
     private long swapTotal;
-    private long swapAvailable;
-    private long physicalAvailable;
     private String type;
     private long speed;
 
@@ -23,26 +21,18 @@ public abstract class Memory {
         pm = gm.getPhysicalMemory().get(0); //assuming only one memory bank is installed
         physicalTotal = gm.getTotal();
         swapTotal = vm.getSwapTotal();
-        swapAvailable = swapTotal - vm.getSwapUsed();
-        physicalAvailable = gm.getAvailable();
         type = pm.getMemoryType();
         speed = pm.getClockSpeed();
     }
 
     public long getPhysicalTotal() {
+        physicalTotal = gm.getTotal(); 
         return (physicalTotal);
     }
 
     public long getSwapTotal() {
+        swapTotal = vm.getSwapTotal();
         return (swapTotal);
-    }
-
-    public long getSwapAvailable(){
-        return (swapAvailable);
-    }
-
-    public long getPhysicalAvailable(){
-        return (physicalAvailable);
     }
 
     public String getType() {
