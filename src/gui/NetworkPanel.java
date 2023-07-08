@@ -35,7 +35,6 @@ public class NetworkPanel extends Panel {
     private void init(Sys s) {
         JPanel networkPanel = new JPanel();
         Font s1 = new Font("S1", Font.PLAIN, 14);
-        Font s2 = new Font("S2", Font.BOLD, 14);
         networkPanel.setFont(s1);
         networkPanel.setLayout(new BorderLayout());
 
@@ -70,7 +69,7 @@ public class NetworkPanel extends Panel {
         // Add the dropdown and cards panel to the content panel
         networkPanel.add(dropdown, BorderLayout.NORTH);
         networkPanel.add(cardsPanel, BorderLayout.CENTER);
-        networkPanel.add(SysInfoGUI.sidebarPanel, BorderLayout.WEST);
+        // networkPanel.add(SysInfoGUI.sidebarPanel, BorderLayout.WEST);
 
         // Set the content pane of the frame
         add(networkPanel);

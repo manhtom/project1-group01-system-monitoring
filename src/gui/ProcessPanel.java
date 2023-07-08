@@ -1,16 +1,20 @@
 package gui;
 
-import org.jfree.data.time.*;
 
 import oshi.util.FormatUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import system.Sys;
+
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class ProcessPanel extends Panel {
@@ -18,15 +22,11 @@ public class ProcessPanel extends Panel {
     private DefaultTableModel processModel;
 
     Sys s;
-    DynamicTimeSeriesCollection memData;
     JTextArea statText;
+    TableRowSorter<TableModel> sorter;
     //private static final String OVERVIEW = "";
-    private static final String PROC = "Processes";
     private static final String[] COL = {"Name", "PID", "Path", "User", "Status", "CPU %", " Kernel time", "VM Total", "Working Set", "Data read",
             "Data written", "Architecture"};
-    private static final double[] COL_WIDTH = {0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.09, 0.1, 0.1, 0.08, 0.35};
-
-    private static final String TOP_PROC = "Top Processes";
 
     public ProcessPanel(Sys s) {
         super();
@@ -38,13 +38,30 @@ public class ProcessPanel extends Panel {
         // Create the main content panel
         JPanel processPanel = new JPanel();
         Font s1 = new Font("S1", Font.PLAIN, 14);
-        Font s2 = new Font("S2", Font.BOLD, 14);
         processPanel.setFont(s1);
         processPanel.setLayout(new BorderLayout());
 
         processModel = new DefaultTableModel((Object[])COL, 1);
 
         JTable table = new JTable(processModel);
+
+        sorter = new TableRowSorter<>(table.getModel());
+        sorter.setComparator(0, new SizeComparator());
+        sorter.setComparator(1, new SizeComparator());
+        sorter.setComparator(2, new SizeComparator());
+        sorter.setComparator(3, new SizeComparator());
+        sorter.setComparator(4, new SizeComparator());
+        sorter.setComparator(5, new SizeComparator());
+        sorter.setComparator(6, new SizeComparator());
+        sorter.setComparator(7, new SizeComparator());
+        sorter.setComparator(8, new SizeComparator());
+        sorter.setComparator(9, new SizeComparator());
+        sorter.setComparator(10, new SizeComparator());
+        sorter.setComparator(11, new SizeComparator());
+
+        sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(11, SortOrder.DESCENDING)));
+
+        table.setRowSorter(sorter);
 
         // Create a timer to update the table
         Timer timer = new Timer(Config.RSLOW, new ActionListener() {
@@ -55,7 +72,7 @@ public class ProcessPanel extends Panel {
         });
         timer.start();
         processPanel.add(new JScrollPane(table), BorderLayout.CENTER);
-        processPanel.add(SysInfoGUI.sidebarPanel, BorderLayout.WEST);
+        // processPanel.add(SysInfoGUI.sidebarPanel, BorderLayout.WEST);
 
         // Set the content pane of the frame
         add(processPanel);
@@ -84,6 +101,23 @@ public class ProcessPanel extends Panel {
                     i++;
 
             }
+            List<? extends RowSorter.SortKey> sortKeys = sorter.getSortKeys();
+            sorter.setModel(processModel);
+            sorter.setComparator(0, new SizeComparator());
+            sorter.setComparator(1, new SizeComparator());
+            sorter.setComparator(2, new SizeComparator());
+            sorter.setComparator(3, new SizeComparator());
+            sorter.setComparator(4, new SizeComparator());
+            sorter.setComparator(5, new SizeComparator());
+            sorter.setComparator(6, new SizeComparator());
+            sorter.setComparator(7, new SizeComparator());
+            sorter.setComparator(8, new SizeComparator());
+            sorter.setComparator(9, new SizeComparator());
+            sorter.setComparator(10, new SizeComparator());
+            sorter.setComparator(11, new SizeComparator());
+
+            sorter.setSortKeys(sortKeys);
+            sorter.sort();
         }
 
     private String format(long l) {
@@ -107,4 +141,12 @@ public class ProcessPanel extends Panel {
         }
 
     }
+
+private static class SizeComparator implements Comparator<Object> {
+
+    public int compare(Object o1, Object o2) {
+        return o1.toString().compareTo(o2.toString());
     }
+}
+
+}

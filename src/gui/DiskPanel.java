@@ -22,18 +22,15 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.DynamicTimeSeriesCollection;
 import org.jfree.data.time.Second;
 
-import resource.network.Adapter;
 import resource.storage.Volume;
 import resource.storage.Win.WinStorage;
-import system.Sys;
 
 public class DiskPanel extends JPanel {
     WinStorage s;
     DynamicTimeSeriesCollection sendData;
     DynamicTimeSeriesCollection receiveData;
     JTextArea statText;
-    private static final String SEND = "";
-    private static final String RECEIVE = "Read";
+
     private static final String STAT = "";
     private static final String VOL_INFO = "Volume info";
     private static final String DISK_INFO = "Disk info";
@@ -46,7 +43,6 @@ public class DiskPanel extends JPanel {
     public void init(WinStorage s) {
         JPanel netPanel = new JPanel();
         Font s1 = new Font("S1", Font.PLAIN, 14);
-        Font s2 = new Font("S2", Font.BOLD, 14);
         netPanel.setFont(s1);
         netPanel.setLayout(new BorderLayout());
 
@@ -158,7 +154,7 @@ public class DiskPanel extends JPanel {
     }
 
     private String getStats() { // fix formatting
-        return String.format("Write data: %s%nRead data: %s%n", format(s.getTotalDataWritten()), format(s.getTotalDataRead()));
+        return String.format("Written data: %s%nRead data: %s%n", format(s.getTotalDataWritten()), format(s.getTotalDataRead()));
     }
 
 

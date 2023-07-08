@@ -1,7 +1,6 @@
 package resource.storage;
 
 import oshi.hardware.HWDiskStore;
-import resource.storage.Linux.PartitionLinux;
 
 import java.util.*;
 
@@ -27,16 +26,16 @@ public class Storage extends Disk {
     }
 
     public long getTotalDataRead(){
-        return totalDataRead;
+        return getDisk().getReadBytes();
     }
     public long getTotalDataWritten(){
-        return totalDataWrite;
+        return getDisk().getWriteBytes();
     }
     public long getIORead(){
-        return IORead;
+        return getDisk().getReads();
     }
     public long getIOWrite(){
-        return IOWrite;
+        return getDisk().getWrites();
     }
 
 

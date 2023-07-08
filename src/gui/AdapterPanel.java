@@ -1,6 +1,5 @@
 package gui;
 
-import gui.NetworkPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,7 +23,6 @@ import org.jfree.data.time.DynamicTimeSeriesCollection;
 import org.jfree.data.time.Second;
 
 import resource.network.Adapter;
-import system.Sys;
 
 public class AdapterPanel extends JPanel {
     Adapter a;
@@ -47,7 +45,6 @@ public class AdapterPanel extends JPanel {
     public void init(Adapter a) {
         JPanel netPanel = new JPanel();
         Font s1 = new Font("S1", Font.PLAIN, 14);
-        Font s2 = new Font("S2", Font.BOLD, 14);
         netPanel.setFont(s1);
         netPanel.setLayout(new BorderLayout());
 
@@ -143,9 +140,9 @@ public class AdapterPanel extends JPanel {
     private void updateGraph() {
         a.net.updateAttributes();
         sendData.advanceTime();
-        sendData.appendData(getData((a.updateUpSpeed()-sendSpeed)/Config.RSLOW*1000));
+        sendData.appendData(getData((double)(a.updateUpSpeed()-sendSpeed)/Config.RSLOW*1000));
         receiveData.advanceTime();
-        receiveData.appendData(getData((a.updateDownSpeed()-receiveSpeed)/Config.RSLOW*1000));
+        receiveData.appendData(getData((double)(a.updateDownSpeed()-receiveSpeed)/Config.RSLOW*1000));
         statText.setText(getStats());
         sendSpeed = a.updateUpSpeed();
         receiveSpeed = a.updateDownSpeed();

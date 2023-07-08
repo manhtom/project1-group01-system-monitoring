@@ -35,7 +35,7 @@ public class OS {
         uptime = os.getSystemUptime();
         nbProcess = os.getProcessCount();
         nbThread = os.getThreadCount();
-        user = os.getSessions().get(0);
+        user = os.getSessions().get(2);
         pcName = os.getNetworkParams().getHostName();
 
         listProcesses = new ArrayList<Process>();

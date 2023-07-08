@@ -3,12 +3,9 @@ package gui;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.*;
-import org.jfree.data.xy.XYSeries;
 
 import oshi.software.os.OSProcess;
 import oshi.software.os.OperatingSystem;
@@ -17,11 +14,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import system.Sys;
@@ -48,7 +42,6 @@ public class MemoryPanel extends Panel {
         // Create the main content panel
         JPanel memPanel = new JPanel();
         Font s1 = new Font("S1", Font.PLAIN, 14);
-        Font s2 = new Font("S2", Font.BOLD, 14);
         memPanel.setFont(s1);
         memPanel.setLayout(new BorderLayout());
 
@@ -83,7 +76,7 @@ public class MemoryPanel extends Panel {
         range.setRange(0d,100d);
         range.setVerticalTickLabels(false);
         ChartPanel memChartPanel = new ChartPanel(memChart);
-        memChartPanel.setPreferredSize(new Dimension(200,200));
+        memChartPanel.setPreferredSize(new Dimension(400,200));
 
         memUsage.add(memChartPanel);
 
@@ -112,7 +105,7 @@ public class MemoryPanel extends Panel {
 
         // Add the quad grid panel to the content panel
         memPanel.add(quadGridPanel, BorderLayout.CENTER);
-        memPanel.add(SysInfoGUI.sidebarPanel, BorderLayout.WEST);
+        // memPanel.add(SysInfoGUI.sidebarPanel, BorderLayout.WEST);
 
         add(memPanel);
 
@@ -133,7 +126,7 @@ public class MemoryPanel extends Panel {
     }
 
     private String getInfo() {
-        return String.format("Installed memory: %s%nSwap total: %s%n%n", 
+        return String.format("Usable installed memory: %s%nSwap total: %s%n%n", 
         format(s.mem.getPhysicalTotal()), format(s.mem.getSwapTotal()) );
     }
 

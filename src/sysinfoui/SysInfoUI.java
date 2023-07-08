@@ -105,7 +105,7 @@ public class SysInfoUI {
         }
 
         else if (o == 3) {
-            if (Win.getFamily() == "Windows") WinStorage.showDetail((WinSystemIO) s.io);
+            if (Win.getFamily().equals("Windows")) WinStorage.showDetail((WinSystemIO) s.io);
             else  LinuxStorage.showDetail((LinuxSystemIO) s.io);
         }
 

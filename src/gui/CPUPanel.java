@@ -3,32 +3,32 @@ package gui;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.time.*;
-import org.jfree.data.xy.XYSeries;
+
+import oshi.software.os.OSProcess;
+import oshi.software.os.OperatingSystem;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import system.Sys;
-import system.SystemCPU;
 
 public class CPUPanel extends Panel {
 
     Sys s;
     DynamicTimeSeriesCollection cpuData;
+    DefaultTableModel processModel;
+    JTable table;
+
+
     JTextArea statText;
-    private static final String OVERVIEW = "";
     private static final String CPU_INFO = "About the CPU";
     private static final String STAT = "Real-time stats";
     private static final String TOP_PROC = "Top Processes";
@@ -39,11 +39,21 @@ public class CPUPanel extends Panel {
         init(s);
     }
 
+    public void createTable() {
+
+        final String[] COL = {"Name", "PID", "CPU %"};
+
+        processModel = new DefaultTableModel((Object[])COL, 5);
+
+        table = new JTable(processModel);
+
+
+    }
+
     private void init(Sys s) {
         // Create the main content panel
         JPanel cpuPanel = new JPanel();
         Font s1 = new Font("S1", Font.PLAIN, 14);
-        Font s2 = new Font("S2", Font.BOLD, 14);
         cpuPanel.setFont(s1);
         cpuPanel.setLayout(new BorderLayout());
 
@@ -77,7 +87,7 @@ public class CPUPanel extends Panel {
         range.setRange(0d,100d);
         range.setVerticalTickLabels(false);
         ChartPanel cpuChartPanel = new ChartPanel(cpuChart);
-        cpuChartPanel.setPreferredSize(new Dimension(200,200));
+        cpuChartPanel.setPreferredSize(new Dimension(400,200));
 
         cpuUsage.add(cpuChartPanel);
 
@@ -90,6 +100,11 @@ public class CPUPanel extends Panel {
         infoText.setText(getInfo());
         infoText.setFont(s1);
         info.add(infoText);
+
+
+        createTable();
+        topProc.add(table);
+        table.setPreferredSize(new Dimension(400, 400));
             
         // Add the sub-panels to the quad grid panel
         quadGridPanel.add(cpuUsage);
@@ -99,7 +114,7 @@ public class CPUPanel extends Panel {
 
         // Add the quad grid panel to the content panel
         cpuPanel.add(quadGridPanel, BorderLayout.CENTER);
-        cpuPanel.add(SysInfoGUI.sidebarPanel, BorderLayout.WEST);
+        // cpuPanel.add(SysInfoGUI.sidebarPanel, BorderLayout.WEST);
 
         add(cpuPanel);
 
@@ -116,7 +131,7 @@ public class CPUPanel extends Panel {
     }
 
     private String getStats() { // fix formatting
-        return String.format("Processes: %d%nThreads: %d%n", s.cpu.getSpeed()/1000000/1000, s.os.getnbProcess(), s.os.getnbThread());
+        return String.format("Processes: %d%nThreads: %d%n", s.os.getnbProcess(), s.os.getnbThread());
     }
 
     private String getInfo() {
@@ -128,6 +143,7 @@ public class CPUPanel extends Panel {
         cpuData.advanceTime();
         cpuData.appendData(getUsage(s.cpu.getUtilization()));
         statText.setText(getStats());
+        updateTable();
 
     }
 
@@ -155,5 +171,17 @@ public class CPUPanel extends Panel {
         else {
             return String.format("%d Hz", l);
         }
+    }
+
+    public void updateTable() {
+            int i = 0;
+                    // Update existing rows with random data
+                for (OSProcess proc : s.os.getOS().getProcesses(null, OperatingSystem.ProcessSorting.CPU_DESC, 0)) {
+                        processModel.setValueAt((Object)proc.getName(), i, 0);
+                        processModel.setValueAt((Object)proc.getProcessID(), i, 1);
+                        processModel.setValueAt((Object)String.format("%.2f", proc.getProcessCpuLoadCumulative()), i, 2);
+                        i++;
+                        if (i == 5) {break;}
+                }
     }
 }

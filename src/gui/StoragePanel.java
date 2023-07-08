@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import system.Sys;
 
 import java.util.List;
-import resource.network.Adapter;
 import resource.storage.Win.WinStorage;
 
 public class StoragePanel extends Panel {
@@ -34,11 +33,10 @@ public class StoragePanel extends Panel {
 
 
     private void init(Sys s) {
-        JPanel networkPanel = new JPanel();
+        JPanel storagePanel = new JPanel();
         Font s1 = new Font("S1", Font.PLAIN, 14);
-        Font s2 = new Font("S2", Font.BOLD, 14);
-        networkPanel.setFont(s1);
-        networkPanel.setLayout(new BorderLayout());
+        storagePanel.setFont(s1);
+        storagePanel.setLayout(new BorderLayout());
 
         String[] menuItems = new String[32]; // max 32 adapters
         int k = 0;
@@ -69,12 +67,12 @@ public class StoragePanel extends Panel {
         });
 
         // Add the dropdown and cards panel to the content panel
-        networkPanel.add(dropdown, BorderLayout.NORTH);
-        networkPanel.add(cardsPanel, BorderLayout.CENTER);
-        networkPanel.add(SysInfoGUI.sidebarPanel, BorderLayout.WEST);
+        storagePanel.add(dropdown, BorderLayout.NORTH);
+        storagePanel.add(cardsPanel, BorderLayout.CENTER);
 
         // Set the content pane of the frame
-        add(networkPanel);
+        add(storagePanel);
+        
     }
 
     private JPanel createPanel(String name, Color color, WinStorage a) {

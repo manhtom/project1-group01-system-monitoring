@@ -78,7 +78,7 @@ public class OverviewPanel extends JPanel {
         // Create the pie chart
         JFreeChart cpuChart = ChartFactory.createPieChart("CPU",cpuData,false,false,false);
         ChartPanel cpuChartPanel = new ChartPanel(cpuChart);
-        cpuChartPanel.setPreferredSize(new Dimension(200,200));
+        cpuChartPanel.setPreferredSize(new Dimension(300,200));
         resource.add(cpuChartPanel);
 
 
@@ -86,7 +86,7 @@ public class OverviewPanel extends JPanel {
 
         JFreeChart memChart = ChartFactory.createPieChart("Memory", memData,false,false,false);
         ChartPanel memChartPanel = new ChartPanel(memChart);
-        memChartPanel.setPreferredSize(new Dimension(200,200));
+        memChartPanel.setPreferredSize(new Dimension(300,200));
 
         resource.add(memChartPanel);
 
@@ -111,7 +111,7 @@ public class OverviewPanel extends JPanel {
 
         // Add the quad grid panel to the content panel
         overviewPanel.add(overviewLabel, BorderLayout.NORTH);
-        overviewPanel.add(SysInfoGUI.sidebarPanel, BorderLayout.WEST);
+
         overviewPanel.add(quadGridPanel, BorderLayout.CENTER);
 
         add(overviewPanel);
@@ -129,7 +129,7 @@ public class OverviewPanel extends JPanel {
     }
 
     private String getGeneralInfo() { // fix formatting
-        return String.format("OS: %s%nCPU: %s%nInstalled memory: %s%n", s.os.getVersion(), s.cpu.getName(), format(s.mem.getPhysicalTotal()));
+        return String.format("OS: %s%nCPU: %s%nUsable installed memory: %s%n", s.os.getVersion(), s.cpu.getName(), format(s.mem.getPhysicalTotal()));
     }
 
     private String getConfigInfo() {

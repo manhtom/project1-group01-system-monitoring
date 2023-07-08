@@ -1,9 +1,6 @@
 package process;
 
 import oshi.software.os.OSProcess;
-import oshi.software.os.OSProcess.State;
-import system.OS;
-
 public class Process {
     OSProcess process;
     private int pid;
@@ -33,7 +30,7 @@ public class Process {
 
         kernelTime = this.process.getKernelTime();
         userTime = this.process.getUserTime();
-        utilization = this.process.getProcessCpuLoadBetweenTicks(o);
+        utilization = this.process.getProcessCpuLoadCumulative();
         bitness = this.process.getBitness();
 
         dataRead = this.process.getBytesRead();

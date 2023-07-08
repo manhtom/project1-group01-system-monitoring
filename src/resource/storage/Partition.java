@@ -3,7 +3,6 @@ package resource.storage;
 import java.util.List;
 
 import oshi.hardware.HWPartition;
-import oshi.software.os.OSFileStore;
 
 public class Partition{
     private List<Volume> listvol;    

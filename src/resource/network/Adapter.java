@@ -1,7 +1,6 @@
 package resource.network;
 
 import oshi.hardware.NetworkIF;
-import system.OS;
 public class Adapter {
     private String[] ipAddressV4;
     private String[] ipAddressV6;

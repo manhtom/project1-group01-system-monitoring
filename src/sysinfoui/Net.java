@@ -1,8 +1,6 @@
 package sysinfoui;
 
-import system.Sys;
 import resource.network.Adapter;
-import resource.network.Network;
 import system.SystemNetwork;
 
 public class Net {
