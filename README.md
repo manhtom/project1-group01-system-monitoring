@@ -1,6 +1,9 @@
 # A Windows/Linux system monitor in Java
 A Secure Programming in Java project @ SoICT-HUST <i> (May 2023 - July 2023)</i>
 
+# Important
+The work on `release/windows` and `release/linux` branches are the one we submit for grading. 
+
 <b>Requirements</b>:
 - Written in Java and take advantage of OOP principles
 - Monitor & collect data about processor, memory, I/O, process, network traffic activity...
