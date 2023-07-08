@@ -5,16 +5,21 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Panel;
+import java.awt.ScrollPane;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -24,11 +29,14 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.DynamicTimeSeriesCollection;
 import org.jfree.data.time.Second;
 
+import com.sun.jna.Platform;
+
+import oshi.PlatformEnum;
 import resource.network.Adapter;
 import resource.storage.Volume;
-import resource.storage.Linux.DiskLinux;
 import resource.storage.Linux.StorageLinux;
-import resource.storage.Win.WinStorage;
+import resource.storage.Linux.VolumeLinux;
+import system.OS;
 import system.Sys;
 
 public class StoragePanel extends JPanel {
@@ -36,13 +44,11 @@ public class StoragePanel extends JPanel {
     DynamicTimeSeriesCollection sendData;
     DynamicTimeSeriesCollection receiveData;
     JTextArea statText;
-DefaultTableModel diskModel;
-    private static final String SEND = "";
-    private static final String RECEIVE = "Read";
-    private static final String STAT = "";
-    private static final String VOL_INFO = "Volume info";
-    private static final String DISK_INFO = "Disk info";
-    private static final String[] COL = {"Name", "File system", "Mount point", "Available", "Total"};
+    DefaultTableModel diskModel;
+
+    private static final String VOL_INFO = "File System Info";
+    
+    private static final Object[] COL = {"Volume", "File system","Mount point", "Available", "Total"};
 
     public StoragePanel(Sys s) {
         super();
@@ -53,50 +59,38 @@ DefaultTableModel diskModel;
     public void init(Sys s) {
         JPanel netPanel = new JPanel();
         Font s1 = new Font("S1", Font.PLAIN, 14);
-        Font s2 = new Font("S2", Font.BOLD, 14);
         netPanel.setFont(s1);
         netPanel.setLayout(new BorderLayout());
 
-        // Create the quad grid panel
-        JPanel quadGridPanel = new JPanel();
-        quadGridPanel.setLayout(new GridLayout(1, 1));
 
         // Create the four sub-panels for the quad grid
-        JPanel VolumePanel = createGridPanel(VOL_INFO);
+        JPanel VolumePanel = new JPanel();
 
+        VolumePanel.setLayout(new BorderLayout());
+        JLabel storageLabel = new JLabel(VOL_INFO);
         Date date = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
 
         diskModel = new DefaultTableModel((Object[])COL, 1);
 
         JTable table = new JTable(diskModel);
 
-        diskModel.setRowCount(16);
+        diskModel.setRowCount(16);  
 
-                // Update existing rows with random data
-
-        VolumePanel.add(table);
+        // Update existing rows with random data
+        VolumePanel.add(storageLabel, BorderLayout.NORTH);
+        VolumePanel.add(new JScrollPane(table), BorderLayout.CENTER);
         getVolInfo();
+
         table.setPreferredSize(new Dimension(1100,1100));
         VolumePanel.setPreferredSize(new Dimension(1100,1100));
 
  
         // Add the sub-panels to the quad grid panel
-        quadGridPanel.add(VolumePanel);
+        add(VolumePanel);
 
-        // Add the quad grid panel to the content panel
-        netPanel.add(quadGridPanel, BorderLayout.CENTER);
-        netPanel.setPreferredSize(new Dimension(1100,1100));
-
-        add(netPanel);
         
-    }
-
-    private JPanel createGridPanel(String name) {
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(name));
-        panel.setBackground(Color.WHITE);
-        return panel;
-    }       
+        
+    }   
  
     private String format(long l) {
         double kb = (double)l/1024;
@@ -122,17 +116,17 @@ DefaultTableModel diskModel;
     }
 
     private void getVolInfo() {
-        int c = 0;
-            for (StorageLinux j : s.io.listDiskLinux) { 
-                for (Volume i : j.listVol) {
-                    diskModel.setValueAt((Object)i.getName(), c, 0);
-                    diskModel.setValueAt((Object)i.getfileSys(), c, 1);
-                    diskModel.setValueAt((Object)i.getMountPoint(), c, 2);
-                    diskModel.setValueAt((Object)format(i.getSpaceAvailable()), c, 3);
-                    diskModel.setValueAt((Object)format(i.getSpaceTotal()), c, 4);
-                    c++;
 
+        int c = 0;
+        for (StorageLinux j : s.lio.listDiskLinux) { 
+                diskModel.setValueAt((Object)j.getVolume(), c, 0);
+                diskModel.setValueAt((Object)j.getfileSys(), c, 1);
+                diskModel.setValueAt((Object)j.getMountPoint(), c, 2);
+                diskModel.setValueAt((Object)format(j.getSpaceAvailable()), c, 3);
+                diskModel.setValueAt((Object)format(j.getSpaceTotal()), c, 4);
+                //diskModel.setValueAt((Object)format(j.getSpaceTotal()), c, 5);
+                c++;
             }
         }
     }
-}
+    

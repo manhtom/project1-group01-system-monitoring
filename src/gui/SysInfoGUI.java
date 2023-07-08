@@ -7,7 +7,6 @@ import system.Sys;
 
 import java.awt.*;
 
-import gui.*;
 
 public class SysInfoGUI extends JFrame {
     public static JPanel sidebarPanel;
@@ -31,15 +30,10 @@ public class SysInfoGUI extends JFrame {
         mainFrame.setLayout(new BorderLayout());
 
 
-        // Set the content pane of the frame
-
-        // Create the sidebar panel
         sidebarPanel = new JPanel();
         sidebarPanel.setBackground(Color.LIGHT_GRAY);
         sidebarPanel.setPreferredSize(new Dimension(120, getHeight()));
-        sidebarPanel.setVisible(true);
 
-        // Create sidebar items
         JButton resources = new JButton("Resources");
 
         JPanel subresources = new JPanel();
@@ -49,15 +43,13 @@ public class SysInfoGUI extends JFrame {
         subresources.add(cpu);
         subresources.add(mem);
 
-        // Add an action listener to item1 to show/hide the subitems panel
+
         resources.addActionListener(e -> {
             subresources.setVisible(!subresources.isVisible());
             pack();
         });
 
-        // Add the sidebar and main panels to the content panel
-        
-        mainFrame.setContentPane(new ProcessPanel(s));
+        mainFrame.setContentPane(new StoragePanel(s));
 
         // Add items to the sidebar panel
         overview = createJButton("Overview", 'O', new OverviewPanel(s));
@@ -67,7 +59,9 @@ public class SysInfoGUI extends JFrame {
         sidebarPanel.add(createJButton("Storage", 'S', new StoragePanel(s)));
         sidebarPanel.add(createJButton("Networking", 'N', new NetworkPanel(s)));
         sidebarPanel.add(createJButton("Processes", 'O', new ProcessPanel(s)));
-    
+
+        mainFrame.add(sidebarPanel, BorderLayout.WEST);
+
         Timer timer = new Timer(Config.RSLOW, e -> updateInfo());
         timer.start();
     }

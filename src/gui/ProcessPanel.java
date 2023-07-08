@@ -104,7 +104,8 @@ public class ProcessPanel extends Panel {
         else {
             return String.format("%d bytes", l);
 
-        }
+            }
 
-    }
+        }
+    
     }

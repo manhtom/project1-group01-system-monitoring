@@ -1,5 +1,6 @@
 package sysinfoui.Storage;
 
+import system.Linux.LinuxSystemIO;
 import system.Win.WinSystemIO;
 import resource.storage.Disk;
 import sysinfoui.SysInfoUI;
@@ -14,9 +15,9 @@ public class WinStorage {
         {}  
     }
 
-    public static void showDetail(WinSystemIO s) {
+    public static void showDetail(WinSystemIO io) {
         int k = 0;
-        for (resource.storage.Win.WinStorage i: s.listDiskWin){
+        for (resource.storage.Win.WinStorage i: io.listDiskWin){
             k++;
             System.out.printf("======================== Disk %d ========================%n",k);
             System.out.printf("Disk: %s%n",i.getName());
@@ -25,7 +26,7 @@ public class WinStorage {
             //System.out.printf("Used Space: %d bytes%n",i.get);
             }
         System.out.printf("%n");
-        for (resource.storage.Win.WinPartition j: s.listPartitionWin){
+        for (resource.storage.Win.WinPartition j: io.listPartitionWin){
             System.out.printf("Volume: %s%n",j.getMountPoint());
             System.out.printf("Physical disc: %s%n",j.getPartition().getIdentification());
             System.out.printf("Capacity: "+SysInfoUI.formatBytes(j.getPartition().getSize()) + "%n");
