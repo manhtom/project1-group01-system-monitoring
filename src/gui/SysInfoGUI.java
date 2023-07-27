@@ -49,7 +49,8 @@ public class SysInfoGUI extends JFrame {
             pack();
         });
 
-        mainFrame.setContentPane(new StoragePanel(s));
+        mainFrame.setContentPane(new OverviewPanel(s));
+
 
         // Add items to the sidebar panel
         overview = createJButton("Overview", 'O', new OverviewPanel(s));
@@ -90,6 +91,10 @@ public class SysInfoGUI extends JFrame {
 
     private void resetMainGui() {
         this.mainFrame.getContentPane().removeAll();
+        mainFrame.add(sidebarPanel, BorderLayout.WEST);
+
+        Timer timer = new Timer(Config.RSLOW, e -> updateInfo());
+        timer.start();
     }
 
     private void refreshMainGui() {

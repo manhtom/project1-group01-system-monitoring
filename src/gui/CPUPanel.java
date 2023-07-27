@@ -10,6 +10,9 @@ import org.jfree.data.time.*;
 import oshi.software.os.OSProcess;
 import oshi.software.os.OperatingSystem;
 
+import oshi.software.os.OSProcess;
+import oshi.software.os.OperatingSystem;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,7 +30,6 @@ public class CPUPanel extends Panel {
     DefaultTableModel processModel;
     JTable table;
 
-
     JTextArea statText;
     private static final String CPU_INFO = "About the CPU";
     private static final String STAT = "Real-time stats";
@@ -37,17 +39,6 @@ public class CPUPanel extends Panel {
         super();
         this.s = s;
         init(s);
-    }
-
-    public void createTable() {
-
-        final String[] COL = {"Name", "PID", "CPU %"};
-
-        processModel = new DefaultTableModel((Object[])COL, 5);
-
-        table = new JTable(processModel);
-
-
     }
 
     private void init(Sys s) {
@@ -91,7 +82,7 @@ public class CPUPanel extends Panel {
 
         cpuUsage.add(cpuChartPanel);
 
-        statText = new JTextArea(0,0);
+        statText = new JTextArea(0,0);    DefaultTableModel processModel;
         statText.setText(getStats());
         statText.setFont(s1);
         stat.add(statText);
@@ -144,7 +135,6 @@ public class CPUPanel extends Panel {
         cpuData.appendData(getUsage(s.cpu.getUtilization()));
         statText.setText(getStats());
         updateTable();
-
     }
 
     private static float[] getUsage(double d) {
@@ -153,6 +143,29 @@ public class CPUPanel extends Panel {
         return cpuUsage;
     }
     
+   public void createTable() {
+
+        final String[] COL = {"Name", "PID", "RSS"};
+
+        processModel = new DefaultTableModel((Object[])COL, 5);
+
+        table = new JTable(processModel);
+
+
+    }
+
+    public void updateTable() {
+            int i = 0;
+                    // Update existing rows with random data
+                for (OSProcess proc : s.os.getOS().getProcesses(null, OperatingSystem.ProcessSorting.RSS_DESC, 0)) {
+                        processModel.setValueAt((Object)proc.getName(), i, 0);
+                        processModel.setValueAt((Object)proc.getProcessID(), i, 1);
+                        processModel.setValueAt((Object)format(proc.getResidentSetSize()), i, 2);
+                        i++;
+                        if (i == 5) {break;}
+                }
+    }
+
     private String format(long l) {
         double kb = (double)l/1000;
         double mb = (double)l/1000000;
@@ -173,15 +186,4 @@ public class CPUPanel extends Panel {
         }
     }
 
-    public void updateTable() {
-            int i = 0;
-                    // Update existing rows with random data
-                for (OSProcess proc : s.os.getOS().getProcesses(null, OperatingSystem.ProcessSorting.CPU_DESC, 0)) {
-                        processModel.setValueAt((Object)proc.getName(), i, 0);
-                        processModel.setValueAt((Object)proc.getProcessID(), i, 1);
-                        processModel.setValueAt((Object)String.format("%.2f", proc.getProcessCpuLoadCumulative()), i, 2);
-                        i++;
-                        if (i == 5) {break;}
-                }
-    }
 }

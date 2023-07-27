@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 import process.Process;
 
+import com.sun.jna.Platform;
+
 import sysinfoui.Storage.WinStorage;
 import sysinfoui.Storage.LinuxStorage;
 public class SysInfoUI {
@@ -20,6 +22,8 @@ public class SysInfoUI {
     static Sys s;
     static Scanner input;
     static int o;
+
+    private static final PlatformEnum platform = PlatformEnum.getValue(Platform.getOSType());  
     public static void main(String[] args) {
         System.out.println("Initializing...");
         si = new SystemInfo();
@@ -106,7 +110,8 @@ public class SysInfoUI {
 
         else if (o == 3) {
             if (Win.getFamily().equals("Windows")) WinStorage.showDetail((WinSystemIO) s.io);
-            else  LinuxStorage.showDetail((LinuxSystemIO) s.io);
+            //else  LinuxStorage.showDetail((LinuxSystemIO) s.io);
+
         }
 
         else if (o == 4) {

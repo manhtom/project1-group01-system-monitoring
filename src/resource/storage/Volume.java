@@ -1,18 +1,19 @@
 package resource.storage;
 
+import oshi.hardware.HWDiskStore;
 import oshi.software.os.OSFileStore;
 
 public class Volume {
+    protected String volume;
     private OSFileStore vol;
-    private String name;
-    private String fileSys;
-    private long spaceTotal;
-    private long spaceAvailable;
+    protected String name;
+    protected String fileSys;
+    protected long spaceTotal;
+    protected long spaceAvailable;
     private String uuid;
     private String mountPoint;
-
     public Volume(OSFileStore o){
-        this.vol = o;
+        this.volume = o.getVolume();
         this.name = o.getLabel();
         this.fileSys = o.getType();
         this.spaceTotal = o.getTotalSpace();
@@ -54,5 +55,9 @@ public class Volume {
 
     public String getMountPoint() {
         return mountPoint;
+    }
+
+    public String getVolume(){
+        return volume;
     }
 }

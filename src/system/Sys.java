@@ -10,6 +10,7 @@ public class Sys {
     public SystemCPU cpu;
     public SystemMemory mem;
     public WinSystemIO io;
+
     public SystemNetwork net;
     public OS os;
 

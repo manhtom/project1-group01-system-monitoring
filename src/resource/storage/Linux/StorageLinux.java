@@ -2,13 +2,14 @@ package resource.storage.Linux;
 
 import java.util.List;
 
-import oshi.hardware.HWDiskStore;
-import resource.storage.Storage;
+import oshi.software.os.OSFileStore;
 import resource.storage.Volume;
 
-public class StorageLinux extends Storage{
-    public StorageLinux(HWDiskStore d, List<Volume> listVol){
-        super(d,listVol);
+public class StorageLinux extends VolumeLinux{
+    public StorageLinux(OSFileStore d, List<Volume> listVolume){
+        super(d,listVolume);
     }
+
+
     
 }

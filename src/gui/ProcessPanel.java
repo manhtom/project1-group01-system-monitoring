@@ -138,15 +138,14 @@ public class ProcessPanel extends Panel {
         else {
             return String.format("%d bytes", l);
 
+            }
+
+    }
+
+    private static class SizeComparator implements Comparator<Object> {
+
+        public int compare(Object o1, Object o2) {
+            return o1.toString().compareTo(o2.toString());
         }
-
     }
-
-private static class SizeComparator implements Comparator<Object> {
-
-    public int compare(Object o1, Object o2) {
-        return o1.toString().compareTo(o2.toString());
-    }
-}
-
 }

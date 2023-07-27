@@ -1,6 +1,5 @@
 package gui;
 
-
 import javax.swing.*;
 
 import java.awt.*;
@@ -56,7 +55,6 @@ public class StoragePanel extends Panel {
         JComboBox<String> dropdown = new JComboBox<>(menuItems);
 
 
-
         // Add action listener to the dropdown
         dropdown.addActionListener(new ActionListener() {
             @Override
@@ -77,5 +75,6 @@ public class StoragePanel extends Panel {
 
     private JPanel createPanel(String name, Color color, WinStorage a) {
         return new DiskPanel(a);
-    };
+    }
 }
+

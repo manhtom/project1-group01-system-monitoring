@@ -1,10 +1,9 @@
 package sysinfoui.Storage;
 
-import oshi.SystemInfo;
-import system.SystemIO;
-import system.OS;
+
+import oshi.util.FormatUtil;
+import resource.storage.Linux.StorageLinux;
 import system.Linux.*;
-import resource.storage.Linux.*;
 public class LinuxStorage {
     private static void pressToContinue() { 
         System.out.println("Press Enter key to continue...");
@@ -18,12 +17,12 @@ public class LinuxStorage {
 
     public static void showDetail(LinuxSystemIO s) {
         int k = 0;
-        for (resource.storage.Linux.StorageLinux i: s.listDiskLinux){
+        for (StorageLinux i: s.listDiskLinux){
             k++;
             System.out.printf("======================== Disk %d ========================%n",k);
             System.out.printf("Disk :%s%n", i.getName());
-            System.out.printf("Total space: %d bytes%n",i.getSize());
-            System.out.printf("Available space: %d bytes%n",i.getSpaceAvailable());
+            System.out.printf("Total space: %s %n",FormatUtil.formatBytes(i.getSpaceTotal()));
+            System.out.printf("Available space: %s %n",FormatUtil.formatBytes(i.getSpaceAvailable()));
             //System.out.printf("Used Space: %d bytes%n",i.getDisk());
             }
         

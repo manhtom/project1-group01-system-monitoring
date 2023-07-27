@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 import system.Sys;
 import java.awt.*;
 
-public class OverviewPanel extends JPanel {
+public class OverviewPanel extends Panel {
     Sys s;
     DefaultPieDataset cpuData;
     DefaultPieDataset memData;

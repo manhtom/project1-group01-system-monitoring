@@ -3,6 +3,7 @@ package system.Linux;
 import oshi.SystemInfo;
 import oshi.software.os.*;
 import resource.storage.Volume;
+import resource.storage.Linux.VolumeLinux;
 import system.OS;
 
 import java.util.*;
@@ -20,6 +21,4 @@ public class Linux extends OS {
 
     }
 
-    public static void showDetail(LinuxSystemIO io) {
-    }
 }
