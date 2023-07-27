@@ -143,9 +143,9 @@ public class AdapterPanel extends JPanel {
     private void updateGraph() {
         a.net.updateAttributes();
         sendData.advanceTime();
-        sendData.appendData(getData((a.updateUpSpeed()-sendSpeed)/Config.RSLOW*1000));
+        sendData.appendData(getData((double)(a.updateUpSpeed()-sendSpeed)/Config.RSLOW*1000));
         receiveData.advanceTime();
-        receiveData.appendData(getData((a.updateDownSpeed()-receiveSpeed)/Config.RSLOW*1000));
+        receiveData.appendData(getData((double)(a.updateDownSpeed()-receiveSpeed)/Config.RSLOW*1000));
         statText.setText(getStats());
         sendSpeed = a.updateUpSpeed();
         receiveSpeed = a.updateDownSpeed();
